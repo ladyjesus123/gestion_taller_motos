@@ -23,7 +23,7 @@ const Cliente = sequelize.define('Cliente', {
   },
 }, {
   tableName: 'clientes',
-  timestamps: false, // Desactivar la creación automática de createdAt y updatedAt
+  timestamps: false, 
 });
 
 module.exports = Cliente;

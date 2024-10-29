@@ -6,7 +6,7 @@ const Moto = require('../models/Moto');
 const Usuario = require('../models/Usuario');
 const { verificarToken, verificarRol } = require('../auth/middleware');
 
-// Configurar Multer para almacenar archivos en la carpeta 'uploads'
+// Configuracion de Multer para almacenar archivos en la carpeta 'uploads'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Crear una inspección con la subida de una imagen (foto de la moto)
+// Crear una inspección con la subida de una imagen(POST) (foto de la moto)
 router.post('/', verificarToken, verificarRol(['vendedor', 'Administrador']), upload.single('foto_moto'), async (req, res) => {
     try {
         const { id_moto, id_vendedor, inventario, observaciones, nivel_gasolina, nivel_aceite } = req.body;
@@ -27,7 +27,7 @@ router.post('/', verificarToken, verificarRol(['vendedor', 'Administrador']), up
         const nuevaInspeccion = await InspeccionRecepcion.create({
             id_moto,
             id_vendedor,
-            inventario: JSON.parse(inventario), // Asegúrate de guardar `inventario` como objeto JSON
+            inventario: JSON.parse(inventario), // inventario se hace como un objeto JSON para poder poner el check que pide el cliente
             observaciones,
             nivel_gasolina,
             nivel_aceite,
@@ -40,7 +40,7 @@ router.post('/', verificarToken, verificarRol(['vendedor', 'Administrador']), up
     }
 });
 
-// Listar todas las Inspecciones y Recepciones
+// Listar todas las Inspecciones y Recepciones(GET)
 router.get('/listar', verificarToken, verificarRol(['Administrador', 'vendedor', 'mecanico']), async (req, res) => {
     try {
         const inspecciones = await InspeccionRecepcion.findAll({
@@ -56,16 +56,16 @@ router.get('/listar', verificarToken, verificarRol(['Administrador', 'vendedor',
     }
 });
 
-// Ruta para obtener una inspección específica
+// Ruta y controlador para obtener una inspección específica (GET/ID)
 router.get('/:id', verificarToken, verificarRol(['Administrador', 'vendedor', 'mecanico']), async (req, res) => {
     try {
         const { id } = req.params;
         const inspeccion = await InspeccionRecepcion.findOne({
             where: { id_inspeccion: id },
             include: [
-                { model: Moto, as: 'moto' }, // Asegúrate de usar el alias 'moto' aquí
-                { model: Usuario, as: 'mecanico' }, // Usar alias 'mecanico'
-                { model: Usuario, as: 'vendedor' }  // Usar alias 'vendedor'
+                { model: Moto, as: 'moto' }, // alias definido en el modelo
+                { model: Usuario, as: 'mecanico' }, // alias definido en el modelo
+                { model: Usuario, as: 'vendedor' }  // alias definido en el modelo
             ]
         });
 
@@ -81,14 +81,14 @@ router.get('/:id', verificarToken, verificarRol(['Administrador', 'vendedor', 'm
 });
 
 
-// Actualizar Inspección (asignar mecánico, actualizar estado, agregar observaciones)
+// ruta y controlador para actualizar Inspección (PUT) (asignar mecánico, actualizar estado, agregar observaciones)
 router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador', 'vendedor']), upload.single('foto_moto'), async (req, res) => {
     try {
         const { id } = req.params;
         const { id_mecanico_asignado, estado, observaciones } = req.body;
         const foto_moto = req.file ? `/uploads/${req.file.filename}` : null;
 
-        // Agregar mensajes de registro para depurar
+        // Agregar mensajes de registro para ver porque me sale error, luego lo quito
         console.log('ID:', id);
         console.log('Estado recibido:', estado);
         console.log('Mecánico asignado:', id_mecanico_asignado);
@@ -115,7 +115,7 @@ router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador', 'v
     }
 });
 
-// Eliminar Inspección
+//Ruta y controlador para Eliminar Inspección (DELETE)
 router.delete('/:id', verificarToken, verificarRol(['Administrador']), async (req, res) => {
     try {
         const { id } = req.params;

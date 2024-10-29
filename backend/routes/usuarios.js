@@ -57,7 +57,7 @@ router.post('/inicial', async (req, res) => {
     }
 });
 
-// Obtener lista de usuarios (restringido a usuarios autenticados)
+// Obtener lista de usuarios (solo administrador)
 router.get('/', verificarToken, async (req, res) => {
     try {
         const usuarios = await Usuario.findAll();
@@ -67,7 +67,7 @@ router.get('/', verificarToken, async (req, res) => {
     }
 });
 
-// Ruta para actualizar un usuario existente (restringido a usuarios autenticados)
+// Ruta para actualizar un usuario existente (solo administrador)
 router.put('/:id', verificarToken, async (req, res) => {
     try {
         const { id } = req.params; // Obtenemos el ID del usuario de los parámetros de la URL
@@ -77,7 +77,7 @@ router.put('/:id', verificarToken, async (req, res) => {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
-        // Actualizamos el usuario con los datos proporcionados en el cuerpo de la solicitud
+        // Actualizamos el usuario
         await usuario.update(req.body);
         res.status(200).json(usuario);
     } catch (error) {

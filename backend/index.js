@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path'); // Importar el módulo path
+const path = require('path'); // Importar el path
 const cors = require('cors'); // Importar cors
 const sequelize = require('./config/database');
 const authRoutes = require('./auth/auth');
@@ -17,10 +17,10 @@ const app = express();
 app.use(express.json());
 app.use(cors()); // Habilitar CORS para todas las solicitudes
 
-// Servir la carpeta de uploads
+// Usar la carpeta de uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Ajustar prefijos para evitar conflictos
+// Ajustar prefijos para evitar conflictos 
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/inspeccionRecepcion', inspeccionRecepcionRoutes);

@@ -1,4 +1,3 @@
-// Clientes (clientes.js)
 const express = require('express');
 const Cliente = require('../models/Cliente');
 

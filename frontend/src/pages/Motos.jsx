@@ -1,4 +1,3 @@
-// Archivo: src/pages/Motos.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -257,7 +256,7 @@ const Motos = () => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title">Vista de la Imagen</h5>
+                    <h5 className="modal-title">Vista de la Moto</h5>
                     <button type="button" className="btn-close" onClick={closeModal}></button>
                   </div>
                   <div className="modal-body text-center">

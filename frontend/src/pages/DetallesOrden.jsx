@@ -13,7 +13,7 @@ const DetallesOrden = () => {
 
     const obtenerDetallesOrden = async () => {
         try {
-            // Agregar el token desde localStorage o cualquier otro lugar donde lo estés guardando
+            // Agregar el token desde localStorage
             const token = localStorage.getItem('token');
 
             const respuesta = await axios.get(`http://localhost:4000/api/ordenesTrabajo/${id}`, {
@@ -35,7 +35,7 @@ const DetallesOrden = () => {
         return <p>Cargando detalles de la orden...</p>;
     }
 
-    // Resto del componente donde muestras los detalles de la orden
+    // Parte visible al usuario
     return (
         <div className="container mt-4">
             <h1>Detalles de la Orden de Trabajo</h1>

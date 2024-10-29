@@ -56,7 +56,7 @@ const OrdenTrabajo = sequelize.define('OrdenTrabajo', {
     timestamps: true
 });
 
-// Definición de asociaciones
+// Asociaciones
 // Moto -> OrdenTrabajo (1 a Muchos)
 // Moto -> OrdenTrabajo (1 a Muchos)
 Moto.hasMany(OrdenTrabajo, { foreignKey: 'id_moto', as: 'ordenesTrabajo' });

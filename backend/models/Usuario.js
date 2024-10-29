@@ -26,12 +26,12 @@ const Usuario = sequelize.define('Usuario', {
     },
     contraseña_visible: {
         type: DataTypes.STRING,
-        allowNull: true, // Contraseña en texto plano (solo para pruebas)
+        allowNull: true, // Contraseña en texto plano (solo para ver cual es si no me pierdo)
     },
     activo: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true, // Asegúrate de tener un valor predeterminado
+        defaultValue: true,
     }
 },
 

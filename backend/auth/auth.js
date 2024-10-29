@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     try {
       const { correo, contraseña } = req.body;
-      console.log('Datos recibidos en el login:', correo, contraseña); // <-- Agrega esto para ver los datos
+      console.log('Datos recibidos en el login:', correo, contraseña);
   
       // Buscar el usuario por correo
       const usuario = await Usuario.findOne({ where: { correo } });
@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
   
       // Verificar la contraseña
       const esValida = await bcrypt.compare(contraseña, usuario.contraseña);
-      console.log('¿La contraseña es válida?', esValida); // <-- Verifica si la comparación es correcta
+      console.log('¿La contraseña es válida?', esValida); 
       
   
       if (!esValida) {

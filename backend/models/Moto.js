@@ -1,4 +1,3 @@
-// Archivo: Moto.js (Modelo)
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Cliente = require('./Cliente');

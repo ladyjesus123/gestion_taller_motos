@@ -10,7 +10,7 @@ const Usuarios = () => {
   const [userRole, setUserRole] = useState(''); // Estado para el rol del usuario actual
 
   useEffect(() => {
-    // Obtener todos los usuarios al cargar el componente si el usuario actual es Administrador
+    // Obtener todos los usuarios si el usuario actual es Administrador
     const fetchUsuarios = async () => {
       try {
         const token = localStorage.getItem('token');

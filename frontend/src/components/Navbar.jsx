@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/home">Taller Mecánico</Link>
+        <Link className="navbar-brand" to="/home">Inicio Motos Guate</Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -27,9 +27,6 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/home">Inicio</Link>
-            </li>
             <li className="nav-item">
               <button className="btn btn-danger" onClick={handleLogout}>Cerrar Sesión</button>
             </li>

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const RepuestoSolicitado = require('../models/RepuestoSolicitado');
-const OrdenTrabajo = require('../models/OrdenTrabajo'); // Asegúrate de importar correctamente el modelo OrdenTrabajo
-const Inventario = require('../models/Inventario'); // Importar Inventario
+const OrdenTrabajo = require('../models/OrdenTrabajo'); 
+const Inventario = require('../models/Inventario'); 
 const { verificarToken, verificarRol } = require('../auth/middleware');
 
-// Crear un nuevo repuesto solicitado (POST)
+// Crear un nuevo repuesto solicitado(POST)
 router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
     try {
         const { id_orden, id_producto, cantidad, estado_autorizacion } = req.body;

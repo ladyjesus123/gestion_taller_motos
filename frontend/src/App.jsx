@@ -49,8 +49,7 @@ const App = () => {
           <Route path="/ordenesTrabajo/crear" element={<CrearOrden />} />
           <Route path="/ordenesTrabajo/detalles/:id" element={<DetallesOrden />} />
           <Route path="/inspeccion-recepcion/editar/:id" element={<EditarInspeccion />} />
-
-
+          
           {/* aqui voy a poner mis rutas para los demás módulos */}
         </Routes>
         <Footer />

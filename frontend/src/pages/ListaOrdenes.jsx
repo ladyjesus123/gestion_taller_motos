@@ -7,7 +7,7 @@ const ListaOrdenes = () => {
     const [ordenes, setOrdenes] = useState([]);
     const navigate = useNavigate();
 
-    // Función para obtener las órdenes de trabajo desde el backend
+    // Función para obtener las órdenes de trabajo desde el backend(GET)
     const obtenerOrdenes = async () => {
         try {
             const token = localStorage.getItem('token');

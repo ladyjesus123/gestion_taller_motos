@@ -55,7 +55,7 @@ const ReporteMecanico = sequelize.define('ReporteMecanico', {
     }
 }, {
     tableName: 'reportes_mecanico',
-    timestamps: true, // Para agregar createdAt y updatedAt automáticamente
+    timestamps: true, // se agrega en la base de datos createdAt y updatedAt automáticamente
 });
 
 // Asociaciones

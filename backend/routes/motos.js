@@ -1,4 +1,3 @@
-// Archivo: motos.js (Ruta)
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -9,7 +8,7 @@ const Cliente = require('../models/Cliente');
 // Configuracion de Multer para almacenar archivos en la carpeta 'uploads'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Aquí es donde multer almacenará las imágenes
+        cb(null, 'uploads/'); // Aquí es donde multer almacenará las imágenes en la carpeta uploads
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`);
@@ -18,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-// Obtener todas las motos
+//Obtener todas las motos(GET)
 router.get('/listar', async (req, res) => {
     try {
         console.log("Iniciando solicitud para listar motos...");
@@ -38,7 +37,7 @@ router.get('/listar', async (req, res) => {
 });
 
 
-// Obtener una moto por ID (cambiar esta parte)
+// Obtener una moto por ID (GET/ID)
 router.get('/listar/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -52,6 +51,8 @@ router.get('/listar/:id', async (req, res) => {
     }
 });
 
+
+// Crear una nueva moto(POST)
 router.post('/crear', upload.fields([
     { name: 'foto_tablero', maxCount: 1 },
     { name: 'foto_angulo_delantero', maxCount: 1 },
@@ -91,7 +92,7 @@ router.post('/crear', upload.fields([
 });
 
 
-// Actualizar una moto por ID
+// Actualizar una moto por ID (PUT)
 router.put('/actualizar/:id', upload.fields([
     { name: 'foto_tablero', maxCount: 1 },
     { name: 'foto_angulo_delantero', maxCount: 1 },
@@ -126,7 +127,7 @@ router.put('/actualizar/:id', upload.fields([
     }
   });
 
-// Eliminar una moto por ID
+// Eliminar una moto por ID (DELETE)
 router.delete('/eliminar/:id', async (req, res) => {
     try {
         const { id } = req.params;

@@ -15,19 +15,19 @@ const EditarInspeccion = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Obtener datos de la inspección existente
+        // Obtener datos de la inspección existente(GET)
         const inspeccionResponse = await axios.get(`http://localhost:4000/api/inspeccionRecepcion/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setFormData(inspeccionResponse.data);
 
-        // Obtener lista de motos
+        // Obtener lista de motos(GET)
         const motosResponse = await axios.get('http://localhost:4000/api/motos/listar');
         if (Array.isArray(motosResponse.data)) {
           setMotos(motosResponse.data);
         }
 
-        // Obtener lista de vendedores
+        // Obtener lista de vendedores(GET)
         const vendedoresResponse = await axios.get('http://localhost:4000/api/usuarios', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
@@ -38,7 +38,7 @@ const EditarInspeccion = () => {
           setVendedores(vendedoresFiltrados);
         }
 
-        // Obtener lista de mecánicos
+        // Obtener lista de mecánicos(GET)
         const mecanicosResponse = await axios.get('http://localhost:4000/api/usuarios', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
@@ -100,7 +100,6 @@ const EditarInspeccion = () => {
             <Card.Body>
               {error && <p className="text-danger">{error}</p>}
               <Form onSubmit={handleSubmit}>
-                {/* Campos similares al formulario de creación */}
                 <Form.Group controlId="formMoto">
                   <Form.Label>Moto</Form.Label>
                   <Form.Control
@@ -117,8 +116,6 @@ const EditarInspeccion = () => {
                     ))}
                   </Form.Control>
                 </Form.Group>
-
-                {/* Similar para Vendedor y Mecánico Asignado */}
                 <Form.Group controlId="formVendedor" className="mt-3">
                   <Form.Label>Vendedor</Form.Label>
                   <Form.Control
@@ -152,8 +149,6 @@ const EditarInspeccion = () => {
                     ))}
                   </Form.Control>
                 </Form.Group>
-
-                {/* Similar para los demás campos */}
                 <Button variant="primary" type="submit" className="mt-4 me-2">
                   Guardar Cambios
                 </Button>

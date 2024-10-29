@@ -46,7 +46,7 @@ const RepuestoSolicitado = sequelize.define('RepuestoSolicitado', {
     },
 }, {
     tableName: 'repuestos_solicitados',
-    timestamps: true, // Para agregar createdAt y updatedAt automáticamente
+    timestamps: true,
 });
 
 // Asociaciones

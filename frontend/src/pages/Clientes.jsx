@@ -1,4 +1,3 @@
-// Archivo: src/pages/Clientes.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,7 @@ const Clientes = () => {
   const [userRole, setUserRole] = useState(''); // Estado para el rol del usuario
 
   useEffect(() => {
-    // Obtener todos los clientes al cargar el componente
+    // Obtener todos los clientes (GET)
     const fetchClientes = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/clientes');

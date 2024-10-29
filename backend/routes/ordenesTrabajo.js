@@ -6,7 +6,7 @@ const Usuario = require('../models/Usuario');
 const Moto = require('../models/Moto');
 const { verificarToken, verificarRol } = require('../auth/middleware');
 
-// Crear una nueva Orden de Trabajo
+// Crear una nueva Orden de Trabajo (POST)
 router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
     try {
         const {
@@ -32,12 +32,12 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
         // Usamos el `id_mecanico_asignado` de la inspección para crear la orden de trabajo
         const nuevaOrden = await OrdenTrabajo.create({
             id_moto,
-            id_usuario: inspeccion.id_mecanico_asignado, // Asignar automáticamente el mecánico de la inspección
+            id_usuario: inspeccion.id_mecanico_asignado, // Asignamos automáticamente el mecánico de la inspección
             id_inspeccion,
             tipo_servicio,
             detalle_inspeccion,
             observaciones,
-            estado: estado || 'abierta' // Si no se proporciona un estado, usar 'abierta' por defecto
+            estado: estado || 'abierta' // Si no se proporciona un estado, se vera el estado 'abierta' al crearla
         });
 
         res.status(201).json(nuevaOrden);
@@ -46,17 +46,17 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
     }
 });
 
-// Obtener todas las Órdenes de Trabajo
+// Obtener todas las Órdenes de Trabajo (GET)
 router.get('/listar', verificarToken, verificarRol(['Administrador','vendedor','mecanico']), async (req, res) => {
     try {
         const ordenes = await OrdenTrabajo.findAll({
             include: [
-                { model: InspeccionRecepcion, as: 'inspeccion' },
-                { model: Usuario, as: 'usuario' },
+                { model: InspeccionRecepcion, as: 'inspeccion' },//alias definido en el modelo
+                { model: Usuario, as: 'usuario' },//alias definido en el modelo
                 {
                     model: Moto,
                     attributes: ['id_moto', 'placa', 'marca', 'modelo'],
-                    as: 'moto' // Usar el alias correcto definido en la relación
+                    as: 'moto' // alias definido en el modelo
                 }
             ]
         });
@@ -66,12 +66,12 @@ router.get('/listar', verificarToken, verificarRol(['Administrador','vendedor','
     }
 });
 
-// Obtener una Orden de Trabajo por ID
+// Obtener una Orden de Trabajo por ID (GET/ID)
 router.get('/:id', verificarToken, verificarRol(['Administrador', 'vendedor', 'mecanico']), async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Verificar si el parámetro `id` es un número válido
+        // verifica si el parámetro `id` es un número válido
         if (isNaN(id)) {
             return res.status(400).json({ error: 'El ID proporcionado no es válido' });
         }
@@ -79,12 +79,12 @@ router.get('/:id', verificarToken, verificarRol(['Administrador', 'vendedor', 'm
         // Buscar la orden de trabajo con sus relaciones
         const orden = await OrdenTrabajo.findByPk(id, {
             include: [
-                { model: InspeccionRecepcion, as: 'inspeccion' }, // Asegúrate que el alias coincide
-                { model: Usuario, as: 'usuario' }, // Asegúrate que el alias coincide
+                { model: InspeccionRecepcion, as: 'inspeccion' }, 
+                { model: Usuario, as: 'usuario' }, 
                 {
                     model: Moto,
                     attributes: ['id_moto', 'placa', 'marca', 'modelo'],
-                    as: 'moto' // Asegúrate que el alias coincide
+                    as: 'moto' 
                 }
             ]
         });
@@ -94,17 +94,17 @@ router.get('/:id', verificarToken, verificarRol(['Administrador', 'vendedor', 'm
             return res.status(404).json({ error: 'Orden de trabajo no encontrada' });
         }
 
-        // Devolver la orden encontrada
+        // se devuelve la orden encontrada
         res.status(200).json(orden);
     } catch (error) {
-        // Registrar un log detallado del error
+        // Registro un log detallado del error
         console.error('Error al obtener los detalles de la orden de trabajo:', error.message);
         res.status(500).json({ error: 'Error al obtener los detalles de la orden de trabajo', detalles: error.message });
     }
 });
 
 
-// Actualizar una Orden de Trabajo
+// Actualizar una Orden de Trabajo(PUT)
 router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
     try {
         const { id } = req.params;
@@ -122,7 +122,7 @@ router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador']), 
     }
 });
 
-// Cerrar una Orden de Trabajo
+// Cerrar una Orden de Trabajo(PUT)
 router.put('/:id/cerrar', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
     try {
         const { id } = req.params;

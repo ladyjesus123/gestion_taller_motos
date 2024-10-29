@@ -10,7 +10,7 @@ const InspeccionRecepcion = () => {
   const [mecanicos, setMecanicos] = useState([]);
 
   
-  // Estado inicial del formulario
+  // Estado inicial del formulario como se veran los campos antes de hacer la inspeccion
 const initialFormData = {
   id_moto: '',
   id_vendedor: '',
@@ -38,7 +38,7 @@ const [error, setError] = useState('');
 useEffect(() => {
   const fetchData = async () => {
     try {
-      // Obtener la lista de motos
+      // Obtener la lista de motos(GET)
       const motosResponse = await axios.get('http://localhost:4000/api/motos/listar');
       if (motosResponse.status !== 200) {
         throw new Error(`Error al obtener motos: ${motosResponse.status}`);
@@ -49,7 +49,7 @@ useEffect(() => {
         throw new Error('La respuesta de motos no es un array.');
       }
 
-      // Obtener la lista de usuarios y filtrar los vendedores
+      // Obtener la lista de usuarios y filtrar los vendedores(GET)
       const vendedoresResponse = await axios.get('http://localhost:4000/api/usuarios', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -65,7 +65,7 @@ useEffect(() => {
         setVendedores([]);
       }
 
-      // Obtener lista de mecánicos
+      // Obtener lista de mecánicos(GET)
       const mecanicosResponse = await axios.get('http://localhost:4000/api/usuarios', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -79,7 +79,7 @@ useEffect(() => {
         setMecanicos([]);
       }
 
-      // Obtener lista de inspecciones y recepciones
+      // Obtener lista de inspecciones y recepciones(GET)
       const inspeccionesResponse = await axios.get('http://localhost:4000/api/inspeccionRecepcion/listar', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
