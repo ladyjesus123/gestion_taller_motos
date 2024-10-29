@@ -60,7 +60,7 @@ const DetalleInspeccion = () => {
           <p><strong>Observaciones:</strong> {inspeccion.observaciones}</p>
           <p><strong>Nivel de Gasolina:</strong> {inspeccion.nivel_gasolina || 'No disponible'}</p>
           <p><strong>Nivel de Aceite:</strong> {inspeccion.nivel_aceite || 'No disponible'}</p>
-          <p><strong>Inventario:</strong></p>
+          <p><strong>Inventario en buen estado:</strong></p>
           {inspeccion.inventario ? (
             <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
               {Object.keys(inspeccion.inventario).map((key) => (

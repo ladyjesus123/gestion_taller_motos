@@ -22,6 +22,9 @@ import EditarInspeccion from './pages/EditarInspeccion';
 import ListaOrdenes from './pages/ListaOrdenes';
 import CrearOrden from './pages/CrearOrden';
 import DetallesOrden from './pages/DetallesOrden';
+import ListaProductos from './pages/ListaProductos';
+import CrearProducto from './pages/CrearProducto';
+import EditarProducto from './pages/EditarProducto';
 
 import './App.css';
 
@@ -49,6 +52,10 @@ const App = () => {
           <Route path="/ordenesTrabajo/crear" element={<CrearOrden />} />
           <Route path="/ordenesTrabajo/detalles/:id" element={<DetallesOrden />} />
           <Route path="/inspeccion-recepcion/editar/:id" element={<EditarInspeccion />} />
+          <Route path="/inventario" element={<ListaProductos />} />
+          <Route path="/inventario/crear" element={<CrearProducto />} />
+          <Route path="/inventario/editar/:id" element={<EditarProducto />} />
+
           
           {/* aqui voy a poner mis rutas para los demás módulos */}
         </Routes>

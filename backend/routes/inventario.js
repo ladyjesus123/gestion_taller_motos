@@ -4,12 +4,26 @@ const Inventario = require('../models/Inventario');
 const { verificarToken, verificarRol } = require('../auth/middleware');
 
 // Obtener todos los repuestos en el inventario (GET)
-router.get('/', verificarToken, verificarRol(['Administrador', 'mecanico']), async (req, res) => {
+router.get('/', verificarToken, verificarRol(['Administrador', 'mecanico', 'vendedor']), async (req, res) => {
     try {
         const repuestos = await Inventario.findAll();
         res.status(200).json(repuestos);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los repuestos', detalles: error.message });
+    }
+});
+
+// Obtener un repuesto específico por ID (GET)
+router.get('/:id', verificarToken, verificarRol(['Administrador', 'mecanico', 'vendedor']), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const repuesto = await Inventario.findByPk(id);
+        if (!repuesto) {
+            return res.status(404).json({ error: 'Repuesto no encontrado' });
+        }
+        res.status(200).json(repuesto);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener el repuesto', detalles: error.message });
     }
 });
 
