@@ -1,0 +1,67 @@
+const express = require('express');
+const router = express.Router();
+const Inventario = require('../models/Inventario');
+const { verificarToken, verificarRol } = require('../auth/middleware');
+
+// Obtener todos los repuestos en el inventario (GET)
+router.get('/', verificarToken, verificarRol(['Administrador', 'mecanico']), async (req, res) => {
+    try {
+        const repuestos = await Inventario.findAll();
+        res.status(200).json(repuestos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los repuestos', detalles: error.message });
+    }
+});
+
+// Agregar un nuevo repuesto al inventario (POST)
+router.post('/', verificarToken, verificarRol(['Administrador']), async (req, res) => {
+    try {
+        const { nombre_producto, descripcion, cantidad_stock, precio } = req.body;
+        const nuevoRepuesto = await Inventario.create({
+            nombre_producto,
+            descripcion,
+            cantidad_stock,
+            precio
+        });
+        res.status(201).json(nuevoRepuesto);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al agregar el repuesto', detalles: error.message });
+    }
+});
+
+// Actualizar un repuesto en el inventario (PUT)
+router.put('/:id', verificarToken, verificarRol(['Administrador']), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nombre_producto, descripcion, cantidad_stock, precio } = req.body;
+
+        const repuesto = await Inventario.findByPk(id);
+        if (!repuesto) {
+            return res.status(404).json({ error: 'Repuesto no encontrado' });
+        }
+
+        await repuesto.update({ nombre_producto, descripcion, cantidad_stock, precio });
+        res.status(200).json(repuesto);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al actualizar el repuesto', detalles: error.message });
+    }
+});
+
+// Eliminar un repuesto del inventario (DELETE)
+router.delete('/:id', verificarToken, verificarRol(['Administrador']), async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const repuesto = await Inventario.findByPk(id);
+        if (!repuesto) {
+            return res.status(404).json({ error: 'Repuesto no encontrado' });
+        }
+
+        await repuesto.destroy();
+        res.status(200).json({ message: 'Repuesto eliminado correctamente' });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al eliminar el repuesto', detalles: error.message });
+    }
+});
+
+module.exports = router;
