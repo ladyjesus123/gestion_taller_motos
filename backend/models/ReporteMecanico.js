@@ -52,6 +52,11 @@ const ReporteMecanico = sequelize.define('ReporteMecanico', {
     observaciones_finales: {
         type: DataTypes.TEXT,
         allowNull: true,
+    },
+    estado_reporte: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'abierto',
     }
 }, {
     tableName: 'reportes_mecanico',
@@ -59,10 +64,11 @@ const ReporteMecanico = sequelize.define('ReporteMecanico', {
 });
 
 // Asociaciones
-OrdenTrabajo.hasMany(ReporteMecanico, { foreignKey: 'id_orden' });
+OrdenTrabajo.hasOne(ReporteMecanico, { foreignKey: 'id_orden', as: 'reporte' });
 ReporteMecanico.belongsTo(OrdenTrabajo, { foreignKey: 'id_orden', as: 'ordenTrabajo' });
 
-Usuario.hasMany(ReporteMecanico, { foreignKey: 'id_mecanico' });
+Usuario.hasMany(ReporteMecanico, { foreignKey: 'id_mecanico', as: 'reportes' });
 ReporteMecanico.belongsTo(Usuario, { foreignKey: 'id_mecanico', as: 'mecanico' });
+
 
 module.exports = ReporteMecanico;

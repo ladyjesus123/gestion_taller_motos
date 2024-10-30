@@ -6,30 +6,46 @@ const ListaProductos = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    const obtenerProductos = async () => {
-      try {
-        // Obtener el token del almacenamiento local
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-          throw new Error('No se encontró el token de autorización');
-        }
-
-        // Hacer la solicitud GET con el encabezado de autorización
-        const response = await axios.get('http://localhost:4000/api/inventario', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setProductos(response.data);
-      } catch (error) {
-        console.error('Error al obtener los productos:', error);
-      }
-    };
-
     obtenerProductos();
   }, []);
+
+  const obtenerProductos = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No se encontró el token de autorización');
+      }
+
+      const response = await axios.get('http://localhost:4000/api/inventario', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProductos(response.data);
+    } catch (error) {
+      console.error('Error al obtener los productos:', error);
+    }
+  };
+
+  const eliminarProducto = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No se encontró el token de autorización');
+      }
+
+      await axios.delete(`http://localhost:4000/api/inventario/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert('Producto eliminado correctamente');
+      obtenerProductos(); // Vuelve a cargar los productos después de eliminar uno
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      alert('No se pudo eliminar el producto. Inténtalo de nuevo.');
+    }
+  };
 
   return (
     <div className="container">
@@ -46,24 +62,32 @@ const ListaProductos = () => {
           </tr>
         </thead>
         <tbody>
-          {productos.length > 0 ? (
-            productos.map(producto => (
-              <tr key={producto.id_producto}>
-                <td>{producto.nombre_producto}</td>
-                <td>{producto.descripcion}</td>
-                <td>{producto.cantidad_stock}</td>
-                <td>{producto.precio}</td>
-                <td>
-                  <Link to={`/inventario/editar/${producto.id_producto}`} className="btn btn-warning btn-sm me-2">Editar</Link>
-                  <button className="btn btn-danger btn-sm">Eliminar</button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="text-center">No hay productos disponibles</td>
+          {productos.map(producto => (
+            <tr key={producto.id_producto} className={producto.cantidad_stock < 10 ? 'table-warning' : ''}>
+              <td>{producto.nombre_producto}</td>
+              <td>{producto.descripcion}</td>
+              <td>
+                {producto.cantidad_stock} 
+                {producto.cantidad_stock < 10 && (
+                  <span className="text-danger ms-2">(¡Bajo stock!)</span>
+                )}
+              </td>
+              <td>{producto.precio}</td>
+              <td>
+                <Link to={`/inventario/editar/${producto.id_producto}`} className="btn btn-warning btn-sm me-2">Editar</Link>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => {
+                    if (window.confirm(`¿Estás segura de que deseas eliminar el producto "${producto.nombre_producto}"?`)) {
+                      eliminarProducto(producto.id_producto);
+                    }
+                  }}
+                >
+                  Eliminar
+                </button>
+              </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>

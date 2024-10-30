@@ -25,6 +25,11 @@ import DetallesOrden from './pages/DetallesOrden';
 import ListaProductos from './pages/ListaProductos';
 import CrearProducto from './pages/CrearProducto';
 import EditarProducto from './pages/EditarProducto';
+import CrearReporte from './pages/CrearReporte';
+import ListaReportes from './pages/ListaReportes';
+import EditarReporte from './pages/EditarReporte';
+import DetallesReporte from './pages/DetallesReporte';
+import Notificaciones from './pages/PanelNotificaciones';
 
 import './App.css';
 
@@ -55,6 +60,12 @@ const App = () => {
           <Route path="/inventario" element={<ListaProductos />} />
           <Route path="/inventario/crear" element={<CrearProducto />} />
           <Route path="/inventario/editar/:id" element={<EditarProducto />} />
+          <Route path="/reportes_mecanico/crear" element={<CrearReporte />} />
+          <Route path="/reportes_mecanico/listar" element={<ListaReportes />} />
+          <Route path="/reportes_mecanico/editar/:id" element={<EditarReporte />} />
+          <Route path="/reportes_mecanico/detalles/:id" element={<DetallesReporte />} />
+          <Route path="/notificaciones" element={<Notificaciones />} />
+          
 
           
           {/* aqui voy a poner mis rutas para los demás módulos */}

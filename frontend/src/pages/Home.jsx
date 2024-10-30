@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Home.css';
+import PanelNotificaciones from './PanelNotificaciones';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,10 +13,11 @@ const Home = () => {
     { name: 'Motos', path: '/motos' },
     { name: 'Inspección y Recepción', path: '/inspeccion-recepcion/listar' },
     { name: 'Órdenes de Trabajo', path: '/ordenesTrabajo' },
-    { name: 'Reportes del Mecánico', path: '/reportes' },
+    { name: 'Reportes del Mecánico', path: '/reportes_mecanico/listar' },
     { name: 'Inventario', path: '/inventario' },
     { name: 'Informes', path: '/informes' },
     { name: 'Usuarios', path: '/usuarios' },
+    { name: 'Notificaciones', path: '/notificaciones' },
     
   ];
 

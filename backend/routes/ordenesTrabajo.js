@@ -122,7 +122,41 @@ router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador']), 
     }
 });
 
-// Cerrar una Orden de Trabajo(PUT)
+// Actualizar el estado de la Orden de Trabajo (PUT)
+router.put('/:id/actualizar-estado', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
+
+        const orden = await OrdenTrabajo.findByPk(id);
+        if (!orden) {
+            return res.status(404).json({ error: 'Orden de trabajo no encontrada' });
+        }
+
+        await orden.update({ estado });
+        res.status(200).json(orden);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al actualizar el estado de la orden de trabajo', detalles: error.message });
+    }
+});
+
+// Obtener órdenes de trabajo abiertas (GET)
+router.get('/abiertas', verificarToken, verificarRol(['Administrador', 'mecanico', 'vendedor']), async (req, res) => {
+    try {
+        const ordenes = await OrdenTrabajo.findAll({
+            where: {
+                estado: 'Abierta',  // Asumiendo que hay un estado "Abierta" para las órdenes
+            },
+        });
+        res.status(200).json(ordenes);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener las órdenes abiertas', detalles: error.message });
+    }
+});
+
+
+
+// Cerrar una Orden de Trabajo (PUT)
 router.put('/:id/cerrar', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
     try {
         const { id } = req.params;
@@ -131,11 +165,20 @@ router.put('/:id/cerrar', verificarToken, verificarRol(['mecanico', 'Administrad
             return res.status(404).json({ error: 'Orden de trabajo no encontrada' });
         }
 
+        // Actualizar el estado de la orden a 'cerrada'
         await orden.update({ estado: 'cerrada' });
+
+        // Cerrar el reporte asociado, si existe
+        const reporte = await ReporteMecanico.findOne({ where: { id_orden: id } });
+        if (reporte) {
+            await reporte.update({ estado_reporte: 'cerrado' });
+        }
+
         res.status(200).json(orden);
     } catch (error) {
         res.status(500).json({ error: 'Error al cerrar la orden de trabajo', detalles: error.message });
     }
 });
+
 
 module.exports = router;

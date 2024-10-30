@@ -1,7 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const Inventario = require('../models/Inventario');
+const { Op } = require('sequelize');
 const { verificarToken, verificarRol } = require('../auth/middleware');
+
+// Obtener productos con bajo stock (GET)
+router.get('/alertas', verificarToken, verificarRol(['Administrador', 'mecanico', 'vendedor']), async (req, res) => {
+    try {
+        const repuestos = await Inventario.findAll({
+            where: {
+                cantidad_stock: {
+                    [Op.lt]: 10,  // Productos con menos de 10 unidades en stock
+                },
+            },
+        });
+        res.status(200).json(repuestos);
+    } catch (error) {
+        console.error('Error en el endpoint de alertas de stock:', error); // Log para verificar el error
+        res.status(500).json({ error: 'Error al obtener las alertas de stock', detalles: error.message });
+    }
+});
+
+
 
 // Obtener todos los repuestos en el inventario (GET)
 router.get('/', verificarToken, verificarRol(['Administrador', 'mecanico', 'vendedor']), async (req, res) => {
@@ -26,6 +46,7 @@ router.get('/:id', verificarToken, verificarRol(['Administrador', 'mecanico', 'v
         res.status(500).json({ error: 'Error al obtener el repuesto', detalles: error.message });
     }
 });
+
 
 // Agregar un nuevo repuesto al inventario (POST)
 router.post('/', verificarToken, verificarRol(['Administrador']), async (req, res) => {
