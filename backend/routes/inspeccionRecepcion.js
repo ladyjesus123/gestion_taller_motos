@@ -40,6 +40,22 @@ router.post('/', verificarToken, verificarRol(['vendedor', 'Administrador']), up
     }
 });
 
+
+// Obtener inspecciones pendientes para asignar a una orden de trabajo (GET)
+router.get('/pendientes', verificarToken, verificarRol(['Administrador', 'vendedor']), async (req, res) => {
+    try {
+        const inspeccionesPendientes = await InspeccionRecepcion.findAll({
+            where: {
+                estado: 'Pendiente',
+            },
+        });
+        res.status(200).json(inspeccionesPendientes);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener las inspecciones pendientes', detalles: error.message });
+    }
+});
+
+
 // Listar todas las Inspecciones y Recepciones(GET)
 router.get('/listar', verificarToken, verificarRol(['Administrador', 'vendedor', 'mecanico']), async (req, res) => {
     try {

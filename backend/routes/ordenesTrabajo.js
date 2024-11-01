@@ -10,11 +10,11 @@ const { verificarToken, verificarRol } = require('../auth/middleware');
 router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), async (req, res) => {
     try {
         const {
-            id_moto, 
+            id_moto,
             id_inspeccion,
-            tipo_servicio, 
-            detalle_inspeccion, 
-            observaciones, 
+            tipo_servicio,
+            detalle_inspeccion,
+            observaciones,
             estado
         } = req.body;
 
@@ -37,14 +37,19 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
             tipo_servicio,
             detalle_inspeccion,
             observaciones,
-            estado: estado || 'abierta' // Si no se proporciona un estado, se vera el estado 'abierta' al crearla
+            estado: estado || 'abierta' // Si no se proporciona un estado, se verá el estado 'abierta' al crearla
         });
+
+        // Actualizar el estado de la inspección a 'Asignada'
+        await inspeccion.update({ estado: 'Asignada' });
 
         res.status(201).json(nuevaOrden);
     } catch (error) {
         res.status(500).json({ error: 'Error al crear la orden de trabajo', detalles: error.message });
     }
 });
+
+
 
 // Obtener todas las Órdenes de Trabajo (GET)
 router.get('/listar', verificarToken, verificarRol(['Administrador','vendedor','mecanico']), async (req, res) => {
@@ -165,8 +170,13 @@ router.put('/:id/cerrar', verificarToken, verificarRol(['mecanico', 'Administrad
             return res.status(404).json({ error: 'Orden de trabajo no encontrada' });
         }
 
+        // Verificar que la orden esté abierta o en proceso antes de cerrarla
+        if (orden.estado === 'cerrada') {
+            return res.status(400).json({ error: 'La orden de trabajo ya está cerrada.' });
+        }
+
         // Actualizar el estado de la orden a 'cerrada'
-        await orden.update({ estado: 'cerrada' });
+        await orden.update({ estado: 'cerrada', fecha_cierre: new Date() });
 
         // Cerrar el reporte asociado, si existe
         const reporte = await ReporteMecanico.findOne({ where: { id_orden: id } });

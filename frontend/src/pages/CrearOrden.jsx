@@ -49,7 +49,7 @@ const CrearOrden = () => {
                     return;
                 }
         
-                const respuesta = await axios.get('http://localhost:4000/api/inspeccionRecepcion/listar', {
+                const respuesta = await axios.get('http://localhost:4000/api/inspeccionRecepcion/pendientes', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -65,6 +65,7 @@ const CrearOrden = () => {
             }
         };
         
+        
         obtenerMotos();
         obtenerInspecciones();
     }, []);
@@ -74,15 +75,17 @@ const CrearOrden = () => {
         console.log("Inspecciones actuales:", inspecciones);
     }, [motos, inspecciones]);
 
-    // Función para manejar cambios en el formulario
-    const handleChange = (e) => {
-        console.log("Campo cambiado:", e.target.name, "Valor:", e.target.value);
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
+   // Función para manejar cambios en el formulario
+const handleChange = (e) => {
+    console.log("Campo cambiado:", e.target.name, "Valor:", e.target.value);
+    const { name, value } = e.target;
+
+    setFormData({
+        ...formData,
+        [name]: name === 'id_moto' || name === 'id_inspeccion' ? parseInt(value, 10) : value
+    });
+};
+
     
     // Función para enviar la solicitud de creación al backend
     const handleSubmit = async (e) => {
@@ -122,14 +125,24 @@ const CrearOrden = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Inspección:</label>
-                    <select className="form-select" name="id_inspeccion" value={formData.id_inspeccion} onChange={handleChange} required>
-                        <option value="">Seleccionar Inspección</option>
-                        {Array.isArray(inspecciones) && inspecciones.map((inspeccion) => (
-                            <option key={inspeccion.id_inspeccion} value={inspeccion.id_inspeccion}>
-                                Inspección ID: {inspeccion.id_inspeccion} - {inspeccion.observaciones}
-                            </option>
-                        ))}
+                    <select
+                        className="form-control"
+                        name="id_inspeccion"
+                        value={formData.id_inspeccion}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Seleccione una inspección</option>
+                        {inspecciones
+                            .filter((inspeccion) => inspeccion.estado === 'Pendiente')
+                            .map((inspeccion) => (
+                                <option key={inspeccion.id_inspeccion} value={inspeccion.id_inspeccion}>
+                                    {`Inspección #${inspeccion.id_inspeccion} - Moto: ${inspeccion.id_moto}`}
+                                </option>
+                            ))}
                     </select>
+
+
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Tipo de Servicio:</label>
