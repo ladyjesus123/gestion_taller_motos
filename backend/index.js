@@ -3,6 +3,8 @@ const path = require('path'); // Importar el path
 const cors = require('cors'); // Importar cors
 const sequelize = require('./config/database');
 const authRoutes = require('./auth/auth');
+require('./init');
+
 const usuariosRoutes = require('./routes/usuarios');
 const inspeccionRecepcionRoutes = require('./routes/inspeccionRecepcion');
 const motosRoutes = require('./routes/motos');
