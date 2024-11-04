@@ -21,12 +21,13 @@ const upload = multer({ storage: storage });
 // Crear una inspección con la subida de una imagen(POST) (foto de la moto)
 router.post('/', verificarToken, verificarRol(['vendedor', 'Administrador']), upload.single('foto_moto'), async (req, res) => {
     try {
-        const { id_moto, id_vendedor, inventario, observaciones, nivel_gasolina, nivel_aceite } = req.body;
+        const { id_moto, id_vendedor, id_mecanico_asignado, inventario, observaciones, nivel_gasolina, nivel_aceite } = req.body;
         const foto_moto = req.file ? `/uploads/${req.file.filename}` : null;
 
         const nuevaInspeccion = await InspeccionRecepcion.create({
             id_moto,
             id_vendedor,
+            id_mecanico_asignado, // Agregar el mecánico asignado al crear la inspección
             inventario: JSON.parse(inventario), // inventario se hace como un objeto JSON para poder poner el check que pide el cliente
             observaciones,
             nivel_gasolina,

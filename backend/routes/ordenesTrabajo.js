@@ -20,14 +20,19 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
 
         // Verificación de datos requeridos
         if (!id_moto || !id_inspeccion || !tipo_servicio || !detalle_inspeccion) {
+            console.error("Datos faltantes:", { id_moto, id_inspeccion, tipo_servicio, detalle_inspeccion });
             return res.status(400).json({ error: 'id_moto, id_inspeccion, tipo_servicio, y detalle_inspeccion son obligatorios' });
         }
 
         // Buscar la inspección para obtener el mecánico asignado
+        console.log("Buscando la inspección...");
         const inspeccion = await InspeccionRecepcion.findByPk(id_inspeccion);
         if (!inspeccion) {
+            console.error("Inspección no encontrada para id_inspeccion:", id_inspeccion);
             return res.status(404).json({ error: 'Inspección no encontrada' });
         }
+
+        console.log("Inspección encontrada:", inspeccion);
 
         // Usamos el `id_mecanico_asignado` de la inspección para crear la orden de trabajo
         const nuevaOrden = await OrdenTrabajo.create({
@@ -40,11 +45,15 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
             estado: estado || 'abierta' // Si no se proporciona un estado, se verá el estado 'abierta' al crearla
         });
 
+        console.log("Orden de trabajo creada con éxito:", nuevaOrden);
+
         // Actualizar el estado de la inspección a 'Asignada'
         await inspeccion.update({ estado: 'Asignada' });
+        console.log("Estado de la inspección actualizado a 'Asignada'");
 
         res.status(201).json(nuevaOrden);
     } catch (error) {
+        console.error("Error al crear la orden de trabajo:", error);
         res.status(500).json({ error: 'Error al crear la orden de trabajo', detalles: error.message });
     }
 });

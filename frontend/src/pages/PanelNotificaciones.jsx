@@ -64,21 +64,6 @@ const PanelNotificaciones = () => {
           <p>No hay productos con bajo stock.</p>
         )}
       </div>
-
-      <div className="alert alert-info mt-3">
-        <h4>Órdenes Abiertas</h4>
-        {ordenesAbiertas.length > 0 ? (
-          <ul>
-            {ordenesAbiertas.map(orden => (
-              <li key={orden.id_orden}>
-                Orden #{orden.id_orden} - Cliente: {orden.nombre_cliente} - Estado: {orden.estado}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay órdenes abiertas.</p>
-        )}
-      </div>
     </div>
   );
 };

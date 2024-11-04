@@ -2,13 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Home.css';
-import PanelNotificaciones from './PanelNotificaciones';
-
 
 const Home = () => {
   const navigate = useNavigate();
 
   const modules = [
+    { name: 'alertas stock Inventario', path: '/notificaciones' },
     { name: 'Clientes', path: '/clientes' },
     { name: 'Motos', path: '/motos' },
     { name: 'Inspección y Recepción', path: '/inspeccion-recepcion/listar' },
@@ -17,7 +16,7 @@ const Home = () => {
     { name: 'Inventario', path: '/inventario' },
     { name: 'Informes', path: '/informes' },
     { name: 'Usuarios', path: '/usuarios' },
-    { name: 'Notificaciones', path: '/notificaciones' },
+
     
   ];
 

@@ -134,13 +134,13 @@ const handleChange = (e) => {
                     >
                         <option value="">Seleccione una inspección</option>
                         {inspecciones
-                            .filter((inspeccion) => inspeccion.estado === 'Pendiente')
                             .map((inspeccion) => (
                                 <option key={inspeccion.id_inspeccion} value={inspeccion.id_inspeccion}>
                                     {`Inspección #${inspeccion.id_inspeccion} - Moto: ${inspeccion.id_moto}`}
                                 </option>
                             ))}
                     </select>
+
 
 
                 </div>

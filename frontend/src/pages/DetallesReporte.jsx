@@ -1,12 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 
 const DetallesReporte = () => {
     const { id } = useParams();
     const [reporte, setReporte] = useState(null);
     const [nuevoEstado, setNuevoEstado] = useState('');
     const navigate = useNavigate();
+
+    // Función para generar el PDF
+    const generarPDF = () => {
+        const doc = new jsPDF();
+
+        // Título del documento
+        doc.setFontSize(18);
+        doc.text(`Ticket de Costos - Orden ID: ${reporte.ordenTrabajo.id_orden}`, 10, 20);
+
+        // Detalles del reporte
+        doc.setFontSize(12);
+        doc.text(`Diagnóstico Inicial: ${reporte.diagnostico_inicial || 'N/A'}`, 10, 40);
+        doc.text(`Procesos Realizados: ${reporte.procesos_realizados || 'N/A'}`, 10, 50);
+        doc.text(`Fecha de Recepción: ${reporte.fecha_hora_recepcion || 'N/A'}`, 10, 60);
+        doc.text(`Fecha de Entrega: ${reporte.fecha_hora_entrega || 'N/A'}`, 10, 70);
+        const costoTotal = parseFloat(reporte.costo_total) || 0.00; // Convierte a número o usa 0.00 si no es válido
+        doc.text(`Costo Total: Q${costoTotal.toFixed(2)}`, 10, 80);
+        doc.text(`Observaciones Finales: ${reporte.observaciones_finales || 'N/A'}`, 10, 90);
+
+        // Guardar el PDF con un nombre específico
+        doc.save(`Ticket_Costos_Orden_${reporte.ordenTrabajo.id_orden}.pdf`);
+    };
 
     // Obtener los detalles del reporte
     const obtenerDetallesReporte = async () => {
@@ -86,6 +109,14 @@ const DetallesReporte = () => {
                     Actualizar Estado de la Orden
                 </button>
             )}
+
+            {/* Botón para generar el PDF */}
+            <button
+                className="btn btn-success mt-3 ms-2"
+                onClick={generarPDF}
+            >
+                Generar Ticket de Costos en PDF
+            </button>
 
             <button
                 className="btn btn-secondary mt-3 ms-2"

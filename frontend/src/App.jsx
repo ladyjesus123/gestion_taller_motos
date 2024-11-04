@@ -30,6 +30,8 @@ import ListaReportes from './pages/ListaReportes';
 import EditarReporte from './pages/EditarReporte';
 import DetallesReporte from './pages/DetallesReporte';
 import Notificaciones from './pages/PanelNotificaciones';
+import PaginaInformes from "./pages/PaginaInformes";
+
 
 import './App.css';
 
@@ -65,6 +67,7 @@ const App = () => {
           <Route path="/reportes_mecanico/editar/:id" element={<EditarReporte />} />
           <Route path="/reportes_mecanico/detalles/:id" element={<DetallesReporte />} />
           <Route path="/notificaciones" element={<Notificaciones />} />
+          <Route path="/informes" element={<PaginaInformes />} />
           
 
           

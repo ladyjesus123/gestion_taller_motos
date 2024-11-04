@@ -14,7 +14,8 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
             procesos_realizados,
             fecha_hora_recepcion,
             fecha_hora_entrega,
-            observaciones_finales
+            observaciones_finales,
+            costo_total
         } = req.body;
 
         // Verificación de que todos los campos requeridos están presentes
@@ -46,7 +47,8 @@ router.post('/', verificarToken, verificarRol(['mecanico', 'Administrador']), as
             procesos_realizados,
             fecha_hora_recepcion,
             fecha_hora_entrega,
-            observaciones_finales
+            observaciones_finales,
+            costo_total
         });
 
         res.status(201).json(nuevoReporte);
@@ -109,7 +111,8 @@ router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador']), 
             fecha_hora_recepcion,
             fecha_hora_entrega,
             observaciones_finales,
-            estado_orden
+            estado_orden,
+            costo_total
         } = req.body;
 
         // Buscar el reporte
@@ -125,7 +128,8 @@ router.put('/:id', verificarToken, verificarRol(['mecanico', 'Administrador']), 
             fecha_hora_recepcion,
             fecha_hora_entrega,
             observaciones_finales,
-            estado_orden
+            estado_orden,
+            costo_total
         });
 
         // Actualizar el estado de la orden de trabajo si es necesario

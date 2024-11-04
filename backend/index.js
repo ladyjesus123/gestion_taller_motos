@@ -14,6 +14,7 @@ const inventarioRoutes = require('./routes/inventario');
 const reportesMecanicoRoutes = require('./routes/reportes_mecanico');
 const repuestosSolicitadosRoutes = require('./routes/repuestos_solicitados');
 const alertasRoutes = require('./routes/alertas');
+const informesRouter = require('./routes/informes');
 
 const app = express();
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use('/api/inventario', inventarioRoutes);
 app.use('/api/reportes_mecanico', reportesMecanicoRoutes);
 app.use('/api/repuestos_solicitados', repuestosSolicitadosRoutes);
 app.use('/api/alertas', alertasRoutes);
+app.use('/api/informes', informesRouter);
 
 // Sincronizar base de datos y correr el servidor
 sequelize.sync().then(() => {

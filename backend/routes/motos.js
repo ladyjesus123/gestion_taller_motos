@@ -61,6 +61,11 @@ router.post('/crear', upload.fields([
     { name: 'foto_lateral_derecha', maxCount: 1 }
 ]), async (req, res) => {
     try {
+
+        console.log(req.files);
+
+
+
         const { id_cliente, marca, modelo, año, cilindraje, kilometraje, motor, chasis, placa, tipo_servicio, fecha_venta, numero_factura } = req.body;
         const fotos = req.files;
 

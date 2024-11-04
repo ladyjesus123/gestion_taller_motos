@@ -158,7 +158,6 @@ const Motos = () => {
       <th style={{ width: '3%' }}>#</th>
       <th style={{ width: '7%' }}>Marca</th>
       <th style={{ width: '7%' }}>Modelo</th>
-      <th style={{ width: '5%' }}>Año</th>
       <th style={{ width: '8%' }}>Cilindraje</th>
       <th style={{ width: '8%' }}>Kilometraje</th>
       <th style={{ width: '7%' }}>Motor</th>
@@ -176,7 +175,6 @@ const Motos = () => {
         <td>{index + 1}</td>
         <td>{moto.marca}</td>
         <td>{moto.modelo}</td>
-        <td>{moto.año}</td>
         <td>{moto.cilindraje}</td>
         <td>{moto.kilometraje}</td>
         <td>{moto.motor}</td>

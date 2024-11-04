@@ -11,7 +11,18 @@ const ListaInspecciones = () => {
   const [inspecciones, setInspecciones] = useState([]);
   const [error, setError] = useState('');
 
-  
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/inspeccionRecepcion/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      // Actualizar la lista de inspecciones después de eliminar
+      setInspecciones(inspecciones.filter((inspeccion) => inspeccion.id_inspeccion !== id));
+    } catch (error) {
+      console.error('Error al eliminar la inspección:', error);
+      setError('Error al eliminar la inspección. Inténtalo de nuevo más tarde.');
+    }
+  };
 
   useEffect(() => {
     const fetchInspecciones = async () => {
@@ -30,15 +41,16 @@ const ListaInspecciones = () => {
     fetchInspecciones();
   }, []);
 
- // Función para redirigir a la creación de una nueva inspección
- const handleCrearInspeccion = () => {
+  // Función para redirigir a la creación de una nueva inspección
+  const handleCrearInspeccion = () => {
     navigate('/inspeccion-recepcion');
   };
 
   // Función para redirigir a los detalles de una inspección
   const handleVerDetalles = (id) => {
     navigate(`/inspeccion-recepcion/detalles/${id}`);
-};
+  };
+
 
   return (
     <Container className="mt-5">
@@ -81,9 +93,13 @@ const ListaInspecciones = () => {
                   >
                     Editar
                   </Button>
-               <Button variant="danger" size="sm">
-                  Eliminar
-                </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDelete(inspeccion.id_inspeccion)}
+                  >
+                    Eliminar
+                  </Button>
               </td>
             </tr>
           ))}

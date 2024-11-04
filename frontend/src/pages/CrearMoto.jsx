@@ -44,8 +44,12 @@ const CrearMoto = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNuevaMoto({ ...nuevaMoto, [name]: value });
+    setNuevaMoto({
+      ...nuevaMoto,
+      [name]: name === 'año' ? parseInt(value, 10) : value,
+    });
   };
+  
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -69,6 +73,9 @@ const CrearMoto = () => {
           formData.append(key, nuevaMoto[key]);
         }
       });
+
+      console.log("Datos a enviar:", nuevaMoto); // Verificar los datos antes de enviarlos al backend
+
 
       const token = localStorage.getItem('token');
       await axios.post('http://localhost:4000/api/motos/crear', formData, {
