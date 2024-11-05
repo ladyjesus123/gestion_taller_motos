@@ -1,9 +1,7 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,18 +11,23 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/login`, {
+      // Usamos la URL del backend configurada en el archivo .env
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/usuarios/login`, {
         correo: email,
         contraseña: password,
       });
-      
+
       // Guardar el token en el almacenamiento local
-      localStorage.setItem('token', response.data.token);
-      // Redirigir a la página principal
-      navigate('/home');
+      if (response.data && response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        // Redirigir a la página principal
+        navigate('/home');
+      } else {
+        alert('Error al iniciar sesión, por favor revisa las credenciales');
+      }
     } catch (error) {
       console.error('Error al iniciar sesión', error);
-      alert('Usuario inactivo o Credenciales incorrectas');
+      alert('Usuario inactivo o credenciales incorrectas');
     }
   };
 
