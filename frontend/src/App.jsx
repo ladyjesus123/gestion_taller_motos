@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Header from './components/Header'; 
-import Home from './pages/Home';
 import Login from './pages/Login';
+import Home from './pages/Home';
+import Header from './components/Header'; 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
 import Clientes from './pages/Clientes'; 
 import EditarCliente from './pages/EditarCliente';
 import Usuarios from './pages/Usuarios'; 
