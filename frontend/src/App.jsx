@@ -8,6 +8,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Clientes from './pages/Clientes'; 
 import EditarCliente from './pages/EditarCliente';
 import Usuarios from './pages/Usuarios'; 
@@ -37,6 +40,15 @@ import './App.css';
 
 
 const App = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Busca el token en el almacenamiento local
+
+    if (!token) {
+      navigate('/'); // Si no hay token, redirige al login
+    }
+  }, [navigate]);
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">

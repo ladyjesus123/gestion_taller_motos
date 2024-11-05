@@ -13,10 +13,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/usuarios/login', {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/login`, {
         correo: email,
         contraseña: password,
       });
+      
       // Guardar el token en el almacenamiento local
       localStorage.setItem('token', response.data.token);
       // Redirigir a la página principal
