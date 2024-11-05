@@ -1,1 +1,34 @@
-node_modules
+node_modules# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment Variables
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database Backups
+*.sql
+gestion_taller_backup.sql
+
+# Archivos de sistema/IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Archivos generados por la compilación
+*.lock-wscript

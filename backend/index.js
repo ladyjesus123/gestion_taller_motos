@@ -1,3 +1,5 @@
+require('dotenv').config();
+const PORT = process.env.PORT || 4000;
 const express = require('express');
 const path = require('path'); // Importar el path
 const cors = require('cors'); // Importar cors
@@ -39,7 +41,7 @@ app.use('/api/informes', informesRouter);
 // Sincronizar base de datos y correr el servidor
 sequelize.sync().then(() => {
     console.log('Base de datos sincronizada');
-    app.listen(4000, () => {
-        console.log('Servidor corriendo en el puerto 4000');
+    app.listen(PORT, () => {
+        console.log(`Servidor corriendo en el puerto ${PORT}`);
     });
 }).catch(err => console.log('Error al sincronizar la base de datos:', err));
