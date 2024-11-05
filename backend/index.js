@@ -1,12 +1,11 @@
 require('dotenv').config();
-const PORT = process.env.PORT || 4000;
-const express = require('express');
-const path = require('path'); // Importar el path
+const PORT = process.env.PORT || 4000;//definir el puerto por defecto 4000 si no que render use otro el que el quiera
 const cors = require('cors'); // Importar cors
+const express = require('express');// Importar express
+const path = require('path'); // Importar el path
 const sequelize = require('./config/database');
 const authRoutes = require('./auth/auth');
 require('./init');
-
 const usuariosRoutes = require('./routes/usuarios');
 const inspeccionRecepcionRoutes = require('./routes/inspeccionRecepcion');
 const motosRoutes = require('./routes/motos');
@@ -20,7 +19,11 @@ const informesRouter = require('./routes/informes');
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Habilitar CORS para todas las solicitudes
+app.use(cors({
+    origin: 'https://ladyjesus123.github.io', // URL de GitHub Pages
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+  })); // Habilitar CORS para todas las solicitudes
 
 // Usar la carpeta de uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
