@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const PORT = process.env.PORT || 4000; // Definir el puerto por defecto 4000 si no que render use otro el que el quiera
-const path = require('path'); // Importar el path
+const PORT = process.env.PORT || 4000;
+const path = require('path');
 const sequelize = require('./config/database');
 const authRoutes = require('./auth/auth');
 require('./init');
@@ -23,8 +23,8 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:5173',
   'https://ladyjesus123.github.io',
-  'https://gestion-taller-motos.onrender.com' // Asegúrate de incluir la URL desplegada del frontend
-]; 
+  'https://gestion-taller-motos.onrender.com' // URL del frontend desplegado
+];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -36,7 +36,7 @@ app.use(cors({
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // Si necesitas enviar cookies u otros tipos de credenciales
+  credentials: true
 }));
 
 // Permitir solicitudes OPTIONS para todas las rutas
@@ -45,7 +45,7 @@ app.options('*', cors());
 // Usar la carpeta de uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Ajustar prefijos para evitar conflictos 
+// Definir rutas de API
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/inspeccionRecepcion', inspeccionRecepcionRoutes);
@@ -58,7 +58,7 @@ app.use('/api/repuestos_solicitados', repuestosSolicitadosRoutes);
 app.use('/api/alertas', alertasRoutes);
 app.use('/api/informes', informesRouter);
 
-// Servir los archivos estáticos del frontend desde la carpeta 'dist'
+// Servir archivos estáticos del frontend desde la carpeta 'dist'
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Siempre devolver index.html para cualquier otra ruta no encontrada (manejo de React Router)
