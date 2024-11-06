@@ -1,8 +1,7 @@
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const PORT = process.env.PORT || 4000;//definir el puerto por defecto 4000 si no que render use otro el que el quiera
+const PORT = process.env.PORT || 4000; // Definir el puerto por defecto 4000 si no que render use otro el que el quiera
 const path = require('path'); // Importar el path
 const sequelize = require('./config/database');
 const authRoutes = require('./auth/auth');
@@ -17,9 +16,6 @@ const reportesMecanicoRoutes = require('./routes/reportes_mecanico');
 const repuestosSolicitadosRoutes = require('./routes/repuestos_solicitados');
 const alertasRoutes = require('./routes/alertas');
 const informesRouter = require('./routes/informes');
-
-
-
 
 const app = express();
 app.use(express.json());
@@ -62,17 +58,13 @@ app.use('/api/repuestos_solicitados', repuestosSolicitadosRoutes);
 app.use('/api/alertas', alertasRoutes);
 app.use('/api/informes', informesRouter);
 
-
-
 // Servir los archivos estáticos del frontend desde la carpeta 'dist'
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
 
 // Siempre devolver index.html para cualquier otra ruta no encontrada (manejo de React Router)
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
 });
-
 
 // Sincronizar base de datos y correr el servidor
 sequelize.sync().then(() => {
