@@ -3,14 +3,17 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Asegúrate de que sea '/'
+  base: '/', 
+  publicDir: 'public', // Carpeta donde se colocan los archivos estáticos sin transformación
   build: {
     outDir: 'dist', // Carpeta donde se generarán los archivos después del build
-    assetsDir: 'assets', // Directorio para los archivos estáticos
+    assetsDir: 'assets', // Directorio dentro de 'dist' donde se colocarán los recursos estáticos como CSS, JS, imágenes, etc.
   },
   server: {
-    mimeTypes: {
-      'text/css': ['css'], // Esta línea asegura que los archivos CSS se sirvan como 'text/css'
+    headers: {
+      'Content-Type': 'text/css', // Esta línea puede ayudar, pero Vite ya debería configurarlo automáticamente
     },
+    port: 4000, // Opcionalmente, puedes especificar un puerto para el entorno de desarrollo
+    open: true, // Abrirá automáticamente el navegador cuando el servidor de desarrollo esté listo
   },
 });
