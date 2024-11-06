@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/Home.css';
+import '../assets/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUsers, faMotorcycle, faClipboardCheck, faWrench, faBox, faFileAlt, faUserShield } from '@fortawesome/free-solid-svg-icons';
 
