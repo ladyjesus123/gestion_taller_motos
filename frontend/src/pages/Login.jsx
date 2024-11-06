@@ -1,48 +1,56 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState({
+    correo: '',
+    contraseña: '',
+  });
 
-  const handleSubmit = async (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUsuario({
+      ...usuario,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+  
     try {
-      // Usamos la URL del backend configurada en el archivo .env
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/usuarios/login`, {
-        correo: email,
-        contraseña: password,
+        correo: usuario.correo,
+        contraseña: usuario.contraseña,
       });
-
-      // Guardar el token en el almacenamiento local
-      if (response.data && response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        // Redirigir a la página principal
-        navigate('/home');
-      } else {
-        alert('Error al iniciar sesión, por favor revisa las credenciales');
-      }
+  
+      console.log(response.data); // Agrega esto para ver la respuesta del servidor
+  
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      window.location.href = '/home';
     } catch (error) {
       console.error('Error al iniciar sesión', error);
       alert('Usuario inactivo o credenciales incorrectas');
     }
   };
-
+  
+  
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4">
         <h2 className="text-center mb-4">Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <div className="form-group mb-3">
             <label>Correo:</label>
             <input
               type="email"
+              name="correo"
               className="form-control"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={usuario.correo}
+              onChange={handleInputChange}
+              placeholder="Correo Electrónico"
               required
             />
           </div>
@@ -50,9 +58,11 @@ const Login = () => {
             <label>Contraseña:</label>
             <input
               type="password"
+              name="contraseña"
               className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={usuario.contraseña}
+              onChange={handleInputChange}
+              placeholder="Contraseña"
               required
             />
           </div>

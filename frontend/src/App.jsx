@@ -30,7 +30,6 @@ import EditarReporte from './pages/EditarReporte';
 import DetallesReporte from './pages/DetallesReporte';
 import Notificaciones from './pages/PanelNotificaciones';
 import PaginaInformes from './pages/PaginaInformes';
-
 import './App.css';
 
 const App = () => {
@@ -55,10 +54,10 @@ const App = () => {
         <Route path="/editar-cliente/:id" element={<EditarCliente />} />
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="/editar-usuario/:id" element={<EditarUsuario />} />
-        <Route path="motos" element={<Motos />} />
+        <Route path="/motos" element={<Motos />} />
         <Route path="/crear-moto" element={<CrearMoto />} />
         <Route path="/editar-moto/:id" element={<EditarMoto />} />
-        <Route path="inspeccion-recepcion" element={<InspeccionRecepcion />} />
+        <Route path="/inspeccion-recepcion" element={<InspeccionRecepcion />} />
         <Route path="/inspeccion-recepcion/listar" element={<ListaInspecciones />} />
         <Route path="/inspeccion-recepcion/detalles/:id" element={<DetalleInspeccion />} />
         <Route path="/ordenesTrabajo" element={<ListaOrdenes />} />
