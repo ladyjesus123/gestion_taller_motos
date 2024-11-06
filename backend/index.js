@@ -23,16 +23,28 @@ const informesRouter = require('./routes/informes');
 
 const app = express();
 app.use(express.json());
-const allowedOrigins = ['http://localhost:5173', 'https://ladyjesus123.github.io']; 
-app.use(cors({ origin: function (origin, callback) {
-  if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-    callback(null, true);
-  } else {
-    callback(new Error('Not allowed by CORS')); 
-  }
-},
-methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-allowedHeaders: ['Content-Type', 'Authorization'] }));
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://ladyjesus123.github.io',
+  'https://gestion-taller-motos.onrender.com' // Asegúrate de incluir la URL desplegada del frontend
+]; 
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Si necesitas enviar cookies u otros tipos de credenciales
+}));
+
+// Permitir solicitudes OPTIONS para todas las rutas
+app.options('*', cors());
 
 // Usar la carpeta de uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -52,9 +64,8 @@ app.use('/api/informes', informesRouter);
 
 // Sincronizar base de datos y correr el servidor
 sequelize.sync().then(() => {
-    sequelize.sync().then(() => { console.log('Base de datos sincronizada'); 
-    app.listen(PORT, () => { 
-        console.log(`Servidor corriendo en el puerto ${PORT}`); 
-    }); 
+  console.log('Base de datos sincronizada');
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  });
 }).catch(err => console.log('Error al sincronizar la base de datos:', err));
-})
