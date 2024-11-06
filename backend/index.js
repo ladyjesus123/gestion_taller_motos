@@ -62,6 +62,18 @@ app.use('/api/repuestos_solicitados', repuestosSolicitadosRoutes);
 app.use('/api/alertas', alertasRoutes);
 app.use('/api/informes', informesRouter);
 
+
+
+// Servir los archivos estáticos del frontend desde la carpeta 'dist'
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+
+// Siempre devolver index.html para cualquier otra ruta no encontrada (manejo de React Router)
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
+});
+
+
 // Sincronizar base de datos y correr el servidor
 sequelize.sync().then(() => {
   console.log('Base de datos sincronizada');
