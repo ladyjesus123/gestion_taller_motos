@@ -30,7 +30,8 @@ import EditarReporte from './pages/EditarReporte';
 import DetallesReporte from './pages/DetallesReporte';
 import Notificaciones from './pages/PanelNotificaciones';
 import PaginaInformes from './pages/PaginaInformes';
-import '/app.css';
+import './assets/App.css';
+
 
 
 
