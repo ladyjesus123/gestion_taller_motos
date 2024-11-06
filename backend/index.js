@@ -22,8 +22,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://ladyjesus123.github.io',
-  'https://gestion-taller-motos.onrender.com' // URL del frontend desplegado
+  'https://gestion-taller-motos.onrender.com' // URL del frontend desplegado en render
 ];
 
 app.use(cors({
@@ -61,7 +60,7 @@ app.use('/api/informes', informesRouter);
 // Servir archivos estáticos del frontend desde la carpeta 'dist'
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-// Siempre devolver index.html para cualquier otra ruta no encontrada (manejo de React Router)
+// para rutas que no son correctas
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
 });

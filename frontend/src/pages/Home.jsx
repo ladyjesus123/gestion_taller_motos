@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../assets/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUsers, faMotorcycle, faClipboardCheck, faWrench, faBox, faFileAlt, faUserShield } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,13 +25,29 @@ const Home = () => {
       <div className="row">
         {modules.map((module) => (
           <div key={module.name} className="col-md-4 mb-4">
-            <div className="card h-100">
+            <div
+              className="card h-100"
+              style={{
+                backgroundColor: '#81c784', // Verde más suave
+                color: '#000000', // Texto negro
+              }}
+            >
               <div className="card-body d-flex flex-column justify-content-between">
                 <div className="text-center mb-3">
-                  <FontAwesomeIcon icon={module.icon} size="3x" />
+                  <FontAwesomeIcon 
+                    icon={module.icon} 
+                    size="3x" 
+                    style={{ color: '#e53935' }} // Icono rojo
+                  />
                 </div>
-                <h3 className="card-title text-center">{module.name}</h3>
-                <button className="btn btn-primary mt-3" onClick={() => navigate(module.path)}>Ir al módulo</button>
+                <h3 className="card-title text-center" style={{ color: '#000000' }}>{module.name}</h3>
+                <button
+                  className="btn btn-primary mt-3"
+                  style={{ color: '#000000' }}
+                  onClick={() => navigate(module.path)}
+                >
+                  Ir al módulo
+                </button>
               </div>
             </div>
           </div>

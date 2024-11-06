@@ -12,20 +12,56 @@ const DetallesReporte = () => {
     // Función para generar el PDF
     const generarPDF = () => {
         const doc = new jsPDF();
+        
+        // Colores personalizados de la empresa
+        const verdeSuave = '#81c784';
+        const rojo = '#e53935';
+        const azulOscuro = '#1e88e5';
 
-        // Título del documento
-        doc.setFontSize(18);
-        doc.text(`Ticket de Costos - Orden ID: ${reporte.ordenTrabajo.id_orden}`, 10, 20);
+        // Establecer el encabezado
+        doc.setFontSize(22);
+        doc.setTextColor(azulOscuro);
+        doc.text('Ticket de Costos - Orden de Trabajo', 10, 20);
+        doc.setFontSize(14);
+        doc.setTextColor('#000000');
+        doc.text(`Orden ID: ${reporte.ordenTrabajo.id_orden}`, 10, 30);
 
-        // Detalles del reporte
+        // Dibujar una línea bajo el título
+        doc.setDrawColor(azulOscuro);
+        doc.line(10, 32, 200, 32);
+
+        // Sección de detalles del reporte
+        doc.setFontSize(16);
+        doc.setTextColor(verdeSuave);
+        doc.text('Detalles del Reporte:', 10, 45);
+
         doc.setFontSize(12);
-        doc.text(`Diagnóstico Inicial: ${reporte.diagnostico_inicial || 'N/A'}`, 10, 40);
-        doc.text(`Procesos Realizados: ${reporte.procesos_realizados || 'N/A'}`, 10, 50);
-        doc.text(`Fecha de Recepción: ${reporte.fecha_hora_recepcion || 'N/A'}`, 10, 60);
-        doc.text(`Fecha de Entrega: ${reporte.fecha_hora_entrega || 'N/A'}`, 10, 70);
-        const costoTotal = parseFloat(reporte.costo_total) || 0.00; // Convierte a número o usa 0.00 si no es válido
-        doc.text(`Costo Total: Q${costoTotal.toFixed(2)}`, 10, 80);
-        doc.text(`Observaciones Finales: ${reporte.observaciones_finales || 'N/A'}`, 10, 90);
+        doc.setTextColor('#000000');
+        doc.setFillColor(verdeSuave);
+        doc.rect(10, 50, 190, 8, 'F');
+        doc.setTextColor('#FFFFFF');
+        doc.text(`Diagnóstico Inicial: ${reporte.diagnostico_inicial || 'N/A'}`, 12, 55);
+
+        doc.setTextColor('#000000');
+        doc.text(`Procesos Realizados: ${reporte.procesos_realizados || 'N/A'}`, 10, 70);
+        doc.text(`Fecha de Recepción: ${reporte.fecha_hora_recepcion || 'N/A'}`, 10, 80);
+        doc.text(`Fecha de Entrega: ${reporte.fecha_hora_entrega || 'N/A'}`, 10, 90);
+        const costoTotal = parseFloat(reporte.costo_total) || 0.00;
+        doc.setTextColor(rojo);
+        doc.text(`Costo Total: Q${costoTotal.toFixed(2)}`, 10, 100);
+
+        doc.setTextColor('#000000');
+        doc.text(`Observaciones Finales: ${reporte.observaciones_finales || 'N/A'}`, 10, 110);
+
+        // Información de la orden de trabajo
+        doc.setFontSize(16);
+        doc.setTextColor(verdeSuave);
+        doc.text('Información de la Orden de Trabajo:', 10, 125);
+
+        doc.setFontSize(12);
+        doc.setTextColor('#000000');
+        doc.text(`ID de la Orden: ${reporte.ordenTrabajo.id_orden}`, 10, 135);
+        doc.text(`Tipo de Servicio: ${reporte.ordenTrabajo.tipo_servicio}`, 10, 145);
 
         // Guardar el PDF con un nombre específico
         doc.save(`Ticket_Costos_Orden_${reporte.ordenTrabajo.id_orden}.pdf`);
