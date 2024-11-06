@@ -30,7 +30,8 @@ import EditarReporte from './pages/EditarReporte';
 import DetallesReporte from './pages/DetallesReporte';
 import Notificaciones from './pages/PanelNotificaciones';
 import PaginaInformes from './pages/PaginaInformes';
-import './App.css';
+import './styles/App.css';
+
 
 const App = () => {
   const navigate = useNavigate();
