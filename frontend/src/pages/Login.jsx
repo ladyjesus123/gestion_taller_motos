@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
@@ -8,6 +9,8 @@ const Login = () => {
     contraseña: '',
   });
 
+  const navigate = useNavigate();
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUsuario({
@@ -25,11 +28,12 @@ const Login = () => {
         contraseña: usuario.contraseña,
       });
   
-      console.log(response.data); // Agrega esto para ver la respuesta del servidor
+      console.log(response.data);
   
       const { token } = response.data;
       localStorage.setItem('token', token);
-      window.location.href = '/home';
+      navigate('/home');
+
     } catch (error) {
       console.error('Error al iniciar sesión', error);
       alert('Usuario inactivo o credenciales incorrectas');
