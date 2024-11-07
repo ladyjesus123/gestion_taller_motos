@@ -40,15 +40,20 @@ const Usuarios = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/usuarios/inicial`, nuevoUsuario, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/usuarios/inicial`, nuevoUsuario, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      
+      // Agrega el nuevo usuario al estado sin recargar la página
+      setUsuarios([...usuarios, response.data]);
+      
+      // Reinicia el formulario
       setNuevoUsuario({ nombre: '', correo: '', contraseña: '', rol: '', activo: 'true' });
-      window.location.reload(); // Recargar la página para ver el nuevo usuario
     } catch (error) {
       console.error('Error al agregar el usuario:', error);
     }
   };
+  
 
   const handleDeleteUsuario = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
