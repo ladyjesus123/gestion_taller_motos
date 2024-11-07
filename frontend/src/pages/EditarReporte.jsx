@@ -12,7 +12,7 @@ const EditarReporte = () => {
     const obtenerReporte = async () => {
         try {
             const token = localStorage.getItem('token');
-            const respuesta = await axios.get(`http://localhost:4000/api/reportes_mecanico/${id}`, {
+            const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/reportes_mecanico/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -43,7 +43,7 @@ const EditarReporte = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:4000/api/reportes_mecanico/${id}`, {
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/reportes_mecanico/${id}`, {
                 diagnostico_inicial: reporte.diagnostico_inicial,
                 procesos_realizados: reporte.procesos_realizados,
                 fecha_hora_recepcion: reporte.fecha_hora_recepcion,

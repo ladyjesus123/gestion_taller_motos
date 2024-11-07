@@ -26,7 +26,7 @@ const CrearReporte = () => {
           return;
         }
 
-        const respuesta = await axios.get('http://localhost:4000/api/ordenesTrabajo/listar', {
+        const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/ordenesTrabajo/listar`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -63,7 +63,7 @@ const CrearReporte = () => {
         console.error("No se encontró un token en localStorage");
         return;
       }
-      await axios.post('http://localhost:4000/api/reportes_mecanico', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/reportes_mecanico`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

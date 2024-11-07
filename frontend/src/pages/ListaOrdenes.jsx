@@ -15,7 +15,7 @@ const ListaOrdenes = () => {
                 console.error("No se encontró un token en localStorage");
                 return;
             }
-            const respuesta = await axios.get('http://localhost:4000/api/ordenesTrabajo/listar', {
+            const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/ordenesTrabajo/listar`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

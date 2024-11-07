@@ -63,7 +63,7 @@ if (!confirmUpdate) {
       });
   
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:4000/api/motos/actualizar/${motoData.id_moto}`, formData, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/motos/actualizar/${motoData.id_moto}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

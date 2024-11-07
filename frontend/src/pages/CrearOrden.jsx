@@ -25,7 +25,7 @@ const CrearOrden = () => {
                     return;
                 }
         
-                const respuesta = await axios.get('http://localhost:4000/api/motos/listar', {
+                const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/motos/listar`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -49,7 +49,7 @@ const CrearOrden = () => {
                     return;
                 }
         
-                const respuesta = await axios.get('http://localhost:4000/api/inspeccionRecepcion/pendientes', {
+                const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/inspeccionRecepcion/pendientes`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -96,7 +96,7 @@ const handleChange = (e) => {
                 console.error("No se encontró un token en localStorage");
                 return;
             }
-            await axios.post('http://localhost:4000/api/ordenesTrabajo', formData, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/ordenesTrabajo`,formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -16,7 +16,7 @@ const DetallesOrden = () => {
             // Agregar el token desde localStorage
             const token = localStorage.getItem('token');
 
-            const respuesta = await axios.get(`http://localhost:4000/api/ordenesTrabajo/${id}`, {
+            const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/ordenesTrabajo/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

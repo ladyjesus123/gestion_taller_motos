@@ -71,7 +71,7 @@ const DetallesReporte = () => {
     const obtenerDetallesReporte = async () => {
         try {
             const token = localStorage.getItem('token');
-            const respuesta = await axios.get(`http://localhost:4000/api/reportes_mecanico/${id}`, {
+            const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/reportes_mecanico/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -91,7 +91,7 @@ const DetallesReporte = () => {
     const manejarCambioEstado = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:4000/api/ordenesTrabajo/${reporte.id_orden}`, {
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/ordenesTrabajo/${reporte.id_orden}`, {
                 estado: nuevoEstado,
             }, {
                 headers: {

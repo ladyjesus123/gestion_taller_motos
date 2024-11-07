@@ -29,7 +29,7 @@ const CrearProducto = () => {
 
       // Hacer la solicitud POST al endpoint correcto con el encabezado de autorización
       const response = await axios.post(
-        'http://localhost:4000/api/inventario',
+        `${import.meta.env.VITE_API_URL}/api/inventario`,
         {
           nombre_producto: nombre,
           descripcion,

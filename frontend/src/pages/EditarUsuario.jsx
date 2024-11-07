@@ -33,7 +33,7 @@ const EditarUsuario = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:4000/api/usuarios/${usuario.id_usuario}`, usuario, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/usuarios/${usuario.id_usuario}`, usuario, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMensajeError('');

@@ -16,7 +16,7 @@ const ListaReportes = () => {
           console.error("No se encontró un token en localStorage");
           return;
         }
-        const respuesta = await axios.get('http://localhost:4000/api/reportes_mecanico/listar', {
+        const respuesta = await axios.get(`${import.meta.env.VITE_API_URL}/api/reportes_mecanico/listar`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

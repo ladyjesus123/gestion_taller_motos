@@ -13,7 +13,7 @@ const ListaInspecciones = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/inspeccionRecepcion/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/inspeccionRecepcion/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       // Actualizar la lista de inspecciones después de eliminar
@@ -27,7 +27,7 @@ const ListaInspecciones = () => {
   useEffect(() => {
     const fetchInspecciones = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/inspeccionRecepcion/listar', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/inspeccionRecepcion/listar`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

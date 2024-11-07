@@ -29,7 +29,7 @@ const EditarCliente = () => {
   const handleUpdateCliente = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4000/api/clientes/${clienteEditado.id_cliente}`, clienteEditado);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/clientes/${clienteEditado.id_cliente}`, clienteEditado);
       navigate('/clientes');
     } catch (error) {
       console.error('Error al actualizar el cliente:', error);

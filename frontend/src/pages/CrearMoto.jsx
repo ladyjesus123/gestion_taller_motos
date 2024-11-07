@@ -30,7 +30,7 @@ const CrearMoto = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const responseClientes = await axios.get('http://localhost:4000/api/clientes', {
+          const responseClientes = await axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setClientes(responseClientes.data);
@@ -78,7 +78,7 @@ const CrearMoto = () => {
 
 
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:4000/api/motos/crear', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/motos/crear`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

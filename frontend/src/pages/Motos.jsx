@@ -35,12 +35,12 @@ const Motos = () => {
           const decodedToken = JSON.parse(atob(token.split('.')[1]));
           setUserRole(decodedToken.rol);
 
-          const responseMotos = await axios.get('http://localhost:4000/api/motos/listar', {
+          const responseMotos = await axios.get(`${import.meta.env.VITE_API_URL}/api/motos/listar`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setMotos(responseMotos.data);
 
-          const responseClientes = await axios.get('http://localhost:4000/api/clientes', {
+          const responseClientes = await axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setClientes(responseClientes.data);
@@ -81,7 +81,7 @@ const Motos = () => {
       });
 
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:4000/api/motos/crear', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/motos/crear`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -117,7 +117,7 @@ const Motos = () => {
     if (window.confirm('¿Estás seguro de que deseas eliminar esta moto?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:4000/api/motos/eliminar/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/motos/eliminar/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMotos(motos.filter((moto) => moto.id_moto !== id));
@@ -185,42 +185,42 @@ const Motos = () => {
         <td>
                 {moto.foto_tablero && (
                   <img
-                    src={`http://localhost:4000${moto.foto_tablero}`}
+                    src={`${import.meta.env.VITE_API_URL}${moto.foto_tablero}`}
                     alt="Foto Tablero"
                     style={{ width: '50px', height: '50px', marginRight: '5px', cursor: 'pointer' }}
-                    onClick={() => handleImageClick(`http://localhost:4000${moto.foto_tablero}`)}
+                    onClick={() => handleImageClick(`${import.meta.env.VITE_API_URL}${moto.foto_tablero}`)}
                   />
                 )}
                 {moto.foto_angulo_delantero && (
                   <img
-                    src={`http://localhost:4000${moto.foto_angulo_delantero}`}
+                    src={`${import.meta.env.VITE_API_URL}${moto.foto_angulo_delantero}`}
                     alt="Foto Ángulo Delantero"
                     style={{ width: '50px', height: '50px', marginRight: '5px', cursor: 'pointer' }}
-                    onClick={() => handleImageClick(`http://localhost:4000${moto.foto_angulo_delantero}`)}
+                    onClick={() => handleImageClick(`${import.meta.env.VITE_API_URL}${moto.foto_angulo_delantero}`)}
                   />
                 )}
                 {moto.foto_angulo_trasero && (
                   <img
-                    src={`http://localhost:4000${moto.foto_angulo_trasero}`}
+                    src={`${import.meta.env.VITE_API_URL}${moto.foto_angulo_trasero}`}
                     alt="Foto Ángulo Trasero"
                     style={{ width: '50px', height: '50px', marginRight: '5px', cursor: 'pointer' }}
-                    onClick={() => handleImageClick(`http://localhost:4000${moto.foto_angulo_trasero}`)}
+                    onClick={() => handleImageClick(`${import.meta.env.VITE_API_URL}${moto.foto_angulo_trasero}`)}
                   />
                 )}
                 {moto.foto_lateral_izquierda && (
                   <img
-                    src={`http://localhost:4000${moto.foto_lateral_izquierda}`}
+                    src={`${import.meta.env.VITE_API_URL}${moto.foto_lateral_izquierda}`}
                     alt="Foto Lateral Izquierda"
                     style={{ width: '50px', height: '50px', marginRight: '5px', cursor: 'pointer' }}
-                    onClick={() => handleImageClick(`http://localhost:4000${moto.foto_lateral_izquierda}`)}
+                    onClick={() => handleImageClick(`${import.meta.env.VITE_API_URL}${moto.foto_lateral_izquierda}`)}
                   />
                 )}
                 {moto.foto_lateral_derecha && (
                   <img
-                    src={`http://localhost:4000${moto.foto_lateral_derecha}`}
+                    src={`${import.meta.env.VITE_API_URL}${moto.foto_lateral_derecha}`}
                     alt="Foto Lateral Derecha"
                     style={{ width: '50px', height: '50px', marginRight: '5px', cursor: 'pointer' }}
-                    onClick={() => handleImageClick(`http://localhost:4000${moto.foto_lateral_derecha}`)}
+                    onClick={() => handleImageClick(`${import.meta.env.VITE_API_URL}${moto.foto_lateral_derecha}`)}
                   />
                 )}
               </td>

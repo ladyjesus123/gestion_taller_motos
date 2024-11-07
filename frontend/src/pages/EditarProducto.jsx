@@ -23,7 +23,7 @@ const EditarProducto = () => {
         }
 
         // Hacer la solicitud GET con el encabezado de autorización
-        const response = await axios.get(`http://localhost:4000/api/inventario/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/inventario/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -63,7 +63,7 @@ const EditarProducto = () => {
       }
 
       await axios.put(
-        `http://localhost:4000/api/inventario/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/inventario/${id}`,
         {
           nombre_producto: nombre,
           descripcion,

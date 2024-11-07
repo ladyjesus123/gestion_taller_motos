@@ -18,7 +18,7 @@ const Usuarios = () => {
           const decodedToken = JSON.parse(atob(token.split('.')[1]));
           setUserRole(decodedToken.rol);
           if (decodedToken.rol === 'Administrador') {
-            const response = await axios.get('http://localhost:4000/api/usuarios', {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
               headers: { Authorization: `Bearer ${token}` },
             });
             setUsuarios(response.data);
@@ -40,7 +40,7 @@ const Usuarios = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:4000/api/usuarios/inicial', nuevoUsuario, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/usuarios/inicial`, nuevoUsuario, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNuevoUsuario({ nombre: '', correo: '', contraseña: '', rol: '', activo: 'true' });
@@ -54,7 +54,7 @@ const Usuarios = () => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:4000/api/usuarios/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/usuarios/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsuarios(usuarios.filter((usuario) => usuario.id_usuario !== id));

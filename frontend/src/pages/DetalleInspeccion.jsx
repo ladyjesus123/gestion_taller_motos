@@ -12,7 +12,7 @@ const DetalleInspeccion = () => {
   useEffect(() => {
     const fetchInspeccion = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/inspeccionRecepcion/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/inspeccionRecepcion/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -76,7 +76,7 @@ const DetalleInspeccion = () => {
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <strong style={{ display: 'block', marginBottom: '10px' }}>Foto de la Moto:</strong>
             <img
-              src={`http://localhost:4000${inspeccion.foto_moto}`}
+              src={`${import.meta.env.VITE_API_URL}${inspeccion.foto_moto}`}
               alt="Foto de la moto"
               style={{
                 maxWidth: '80%',

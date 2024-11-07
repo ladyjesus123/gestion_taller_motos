@@ -16,19 +16,19 @@ const EditarInspeccion = () => {
     const fetchData = async () => {
       try {
         // Obtener datos de la inspección existente(GET)
-        const inspeccionResponse = await axios.get(`http://localhost:4000/api/inspeccionRecepcion/${id}`, {
+        const inspeccionResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/inspeccionRecepcion/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setFormData(inspeccionResponse.data);
 
         // Obtener lista de motos(GET)
-        const motosResponse = await axios.get('http://localhost:4000/api/motos/listar');
+        const motosResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/motos/listar`);
         if (Array.isArray(motosResponse.data)) {
           setMotos(motosResponse.data);
         }
 
         // Obtener lista de vendedores(GET)
-        const vendedoresResponse = await axios.get('http://localhost:4000/api/usuarios', {
+        const vendedoresResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         if (Array.isArray(vendedoresResponse.data)) {
@@ -39,7 +39,7 @@ const EditarInspeccion = () => {
         }
 
         // Obtener lista de mecánicos(GET)
-        const mecanicosResponse = await axios.get('http://localhost:4000/api/usuarios', {
+        const mecanicosResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/usuarios`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         if (Array.isArray(mecanicosResponse.data)) {
@@ -78,7 +78,7 @@ const EditarInspeccion = () => {
     setError('');
 
     try {
-      await axios.put(`http://localhost:4000/api/inspeccionRecepcion/${id}`, formData, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/inspeccionRecepcion/${id}`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
 

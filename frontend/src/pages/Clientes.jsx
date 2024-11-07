@@ -13,7 +13,7 @@ const Clientes = () => {
     // Obtener todos los clientes (GET)
     const fetchClientes = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/clientes');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`);
         setClientes(response.data);
       } catch (error) {
         console.error('Error al cargar los clientes:', error);
@@ -37,7 +37,7 @@ const Clientes = () => {
   const handleAddCliente = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/clientes', nuevoCliente);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/clientes`, nuevoCliente);
       setClientes([...clientes, response.data]);
       setNuevoCliente({ nombre: '', telefono: '', direccion: '', nit: '' });
     } catch (error) {
@@ -48,7 +48,7 @@ const Clientes = () => {
   const handleDeleteCliente = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
       try {
-        await axios.delete(`http://localhost:4000/api/clientes/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/clientes/${id}`);
         setClientes(clientes.filter((cliente) => cliente.id_cliente !== id));
       } catch (error) {
         console.error('Error al eliminar el cliente:', error);

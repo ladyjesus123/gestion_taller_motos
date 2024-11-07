@@ -16,7 +16,7 @@ const ListaProductos = () => {
         throw new Error('No se encontró el token de autorización');
       }
 
-      const response = await axios.get('http://localhost:4000/api/inventario', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/inventario`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,7 +34,7 @@ const ListaProductos = () => {
         throw new Error('No se encontró el token de autorización');
       }
 
-      await axios.delete(`http://localhost:4000/api/inventario/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/inventario/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

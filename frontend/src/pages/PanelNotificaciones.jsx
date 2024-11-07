@@ -17,7 +17,7 @@ const PanelNotificaciones = () => {
         throw new Error('No se encontró el token de autorización');
       }
 
-      const response = await axios.get('http://localhost:4000/api/inventario/alertas', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/inventario/alertas`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,7 +36,7 @@ const PanelNotificaciones = () => {
         throw new Error('No se encontró el token de autorización');
       }
 
-      const response = await axios.get('http://localhost:4000/api/ordenesTrabajo/abiertas', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/ordenesTrabajo/abiertas`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
